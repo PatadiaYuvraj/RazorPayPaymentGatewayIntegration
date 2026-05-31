@@ -3,61 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\DTOs\CreateOrderData;
-use App\DTOs\RefundData;
+use App\DTOs\{CreateOrderData, RefundData};
 use App\Services\Payments\PaymentManager;
 
 class PaymentController extends Controller
 {
-    public function __construct(
-        protected PaymentManager $paymentManager
-    ) {}
-
-    /*
-    |--------------------------------------------------------------------------
-    | INDEX
-    |--------------------------------------------------------------------------
-    */
+    public function __construct(protected PaymentManager $paymentManager) {}
 
     public function index()
     {
-        $payments = $this->paymentManager
-            ->driver()
-            ->fetchAllPayments([
-                'count' => 50
-            ]);
-
-        return view(
-            'payments.index',
-            [
-                'payments' => $payments['items'] ?? []
-            ]
-        );
+        $payments = $this->paymentManager->driver()->fetchAllPayments(['count' => 50]);
+        return view('payments.index', ['payments' => $payments['items'] ?? []]);
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | CREATE
-    |--------------------------------------------------------------------------
-    */
 
     public function create()
     {
-        $paymentMethods = [
-            'razorpay' => 'Razor Pay'
-        ];
-
-        return view(
-            'payments.create',
-            compact('paymentMethods')
-        );
+        $paymentMethods = ['razorpay' => 'Razor Pay'];
+        return view('payments.create', compact('paymentMethods'));
     }
-
-    /*
-    |--------------------------------------------------------------------------
-    | STORE
-    |--------------------------------------------------------------------------
-    */
 
     public function store(Request $request)
     {
@@ -72,29 +35,9 @@ class PaymentController extends Controller
             ]
         ]);
 
-        $gateway = $this->paymentManager
-            ->driver($request->gateway);
-
-        /*
-        Convert rupees to paise
-        */
-
-        $amount =
-            intval(
-                round(
-                    $request->amount * 100
-                )
-            );
-
-        $order = $gateway->createOrder(
-            new CreateOrderData(
-                amount: $amount,
-                receipt: 'ORDER_' . time(),
-                notes: [
-                    'source' => 'admin-panel'
-                ]
-            )
-        );
+        $gateway = $this->paymentManager->driver($request->gateway);
+        $amount = intval(round($request->amount * 100));
+        $order = $gateway->createOrder(new CreateOrderData(amount: $amount, receipt: 'ORDER_' . time(), notes: ['source' => 'admin-panel']));
 
         return response()->json([
             'success' => true,
@@ -104,36 +47,59 @@ class PaymentController extends Controller
         ]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | SHOW
-    |--------------------------------------------------------------------------
-    */
+    public function verify(Request $request)
+    {
+        $request->validate([
+            'razorpay_payment_id' => [
+                'required'
+            ],
+            'razorpay_order_id' => [
+                'required'
+            ],
+            'razorpay_signature' => [
+                'required'
+            ]
+        ]);
+        try {
+            $gateway = $this->paymentManager->driver('razorpay');
+            $verified = $gateway->verifyPayment([
+                'razorpay_order_id' => $request->razorpay_order_id,
+                'razorpay_payment_id' => $request->razorpay_payment_id,
+                'razorpay_signature' => $request->razorpay_signature
+            ]);
+
+            if (!$verified) {
+                return response()->json([
+                    'success' => false,
+                    'message' =>
+                    'Payment verification failed'
+                ]);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Payment verified successfully'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
 
     public function show(string $id)
     {
         $gateway = $this->paymentManager->driver();
         $payment = $gateway->fetchPayment($id);
-        $settlements = $gateway->fetchSettlements($id);
-        return view(
-            'payments.show',
-            [
-                'payment' => $payment,
-                'settlement' => $settlements ?? []
-            ]
-        );
+        $refunds = $gateway->fetchRefunds($id);
+
+        return view('payments.show', ['payment' => $payment, 'refunds' => $refunds]);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | REFUND
-    |--------------------------------------------------------------------------
-    */
-
-    public function update(
-        Request $request,
-        string $id
-    ) {
+    public function update(Request $request, string $id)
+    {
 
         $request->validate([
             'refund_amount' => [
@@ -145,63 +111,25 @@ class PaymentController extends Controller
 
         try {
 
-            $gateway = $this->paymentManager
-                ->driver();
+            $gateway = $this->paymentManager->driver();
 
-            $payment = $gateway
-                ->fetchPayment($id);
+            $payment = $gateway->fetchPayment($id);
 
-            $capturedAmount =
-                $payment['amount'];
+            $capturedAmount = $payment['amount'];
 
-            $alreadyRefunded =
-                $payment['amount_refunded'] ?? 0;
+            $alreadyRefunded = $payment['amount_refunded'] ?? 0;
 
-            $remainingRefundable =
-                $capturedAmount - $alreadyRefunded;
+            $remainingRefundable = $capturedAmount - $alreadyRefunded;
 
-            $refundAmount =
-                intval(
-                    round(
-                        $request->refund_amount * 100
-                    )
-                );
+            $refundAmount = intval(round($request->refund_amount * 100));
 
-            if (
-                $refundAmount
-                >
-                $remainingRefundable
-            ) {
-
-                return redirect()
-                    ->back()
-                    ->with(
-                        'error',
-                        'Refund exceeds refundable amount'
-                    );
+            if ($refundAmount > $remainingRefundable) {
+                return redirect()->back()->with('error', 'Refund exceeds refundable amount');
             }
-
-            $gateway->refundPayment(
-                new RefundData(
-                    paymentId: $id,
-                    amount: $refundAmount
-                )
-            );
-
-            return redirect()
-                ->back()
-                ->with(
-                    'success',
-                    'Refund successful'
-                );
+            $gateway->refundPayment(new RefundData(paymentId: $id, amount: $refundAmount));
+            return redirect()->back()->with('success', 'Refund successful');
         } catch (\Exception $e) {
-
-            return redirect()
-                ->back()
-                ->with(
-                    'error',
-                    $e->getMessage()
-                );
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

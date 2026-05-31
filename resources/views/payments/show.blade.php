@@ -17,6 +17,338 @@
         }
 
         body {
+
+            margin: 0;
+            padding: 30px;
+
+            background:
+                linear-gradient(135deg,
+                    #0f172a,
+                    #111827,
+                    #1e293b);
+
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            color: white;
+        }
+
+        .container {
+
+            width: 100%;
+            max-width: 1300px;
+
+            margin: auto;
+        }
+
+        .top-bar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
+
+        .title {
+
+            font-size: 38px;
+
+            font-weight: bold;
+        }
+
+        .subtitle {
+
+            color: #94a3b8;
+
+            margin-top: 8px;
+        }
+
+        .back-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 16px 24px;
+
+            border-radius: 18px;
+
+            text-decoration: none;
+
+            background:
+                rgba(255, 255, 255, 0.08);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            color: white;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+
+            transform: translateY(-2px);
+
+            background:
+                rgba(255, 255, 255, 0.12);
+        }
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit,
+                    minmax(320px, 1fr));
+
+            gap: 24px;
+        }
+
+        .card {
+
+            background:
+                rgba(255, 255, 255, 0.06);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 28px;
+
+            overflow: hidden;
+
+            backdrop-filter: blur(12px);
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-header {
+
+            padding: 24px 28px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            font-size: 20px;
+
+            font-weight: bold;
+        }
+
+        .card-body {
+
+            padding: 28px;
+        }
+
+        .detail-item {
+
+            margin-bottom: 22px;
+        }
+
+        .detail-label {
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+        }
+
+        .detail-value {
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            word-break: break-word;
+        }
+
+        .status {
+
+            display: inline-block;
+
+            padding: 10px 16px;
+
+            border-radius: 999px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+        }
+
+        .captured {
+
+            background:
+                rgba(34, 197, 94, 0.15);
+
+            color: #4ade80;
+        }
+
+        .failed {
+
+            background:
+                rgba(239, 68, 68, 0.15);
+
+            color: #f87171;
+        }
+
+        .pending {
+
+            background:
+                rgba(234, 179, 8, 0.15);
+
+            color: #facc15;
+        }
+
+        .refund-form {
+
+            margin-top: 15px;
+        }
+
+        .input {
+
+            width: 100%;
+
+            padding: 16px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            background:
+                rgba(255, 255, 255, 0.05);
+
+            color: white;
+
+            outline: none;
+
+            margin-bottom: 16px;
+        }
+
+        .input:focus {
+
+            border-color: #3b82f6;
+
+            box-shadow:
+                0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+
+        .refund-btn {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 16px;
+
+            border-radius: 16px;
+
+            background:
+                linear-gradient(135deg,
+                    #dc2626,
+                    #ef4444);
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .refund-btn:hover {
+
+            transform: translateY(-2px);
+
+            opacity: 0.95;
+        }
+
+        .table-wrapper {
+
+            overflow-x: auto;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+        }
+
+        th {
+
+            text-align: left;
+
+            padding: 18px;
+
+            color: #cbd5e1;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        td {
+
+            padding: 18px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.06);
+
+            color: #e2e8f0;
+        }
+
+        .empty {
+
+            color: #94a3b8;
+
+            text-align: center;
+
+            padding: 30px;
+        }
+
+        .json-box {
+
+            background:
+                rgba(0, 0, 0, 0.35);
+
+            border-radius: 18px;
+
+            padding: 18px;
+
+            overflow-x: auto;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+        }
+    </style>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
             margin: 0;
             padding: 40px;
             background:
@@ -540,48 +872,15 @@
                             <span class="badge failed">
                                 FAILED
                             </span>
+                        @elseif($payment['status'] === 'refunded')
+                            <span class="badge refunded">
+                                REFUNDED
+                            </span>
                         @else
                             <span class="badge pending">
-
                                 {{ strtoupper($payment['status']) }}
-
                             </span>
                         @endif
-
-                    </div>
-
-                </div>
-
-                <div class="stat-box">
-
-                    <div class="stat-label">
-                        Settlement Status
-                    </div>
-
-                    <div>
-
-                        @if ($settlement['status'] === 'processed')
-                            <span class="badge success">
-                                SETTLED
-                            </span>
-                        @elseif($settlement['status'] === 'pending')
-                            <span class="badge pending">
-                                PENDING
-                            </span>
-                        @else
-                            <span class="badge error">
-
-                                {{ strtoupper($settlement['status']) }}
-
-                            </span>
-                        @endif
-
-                    </div>
-
-                    <div class="small-text">
-
-                        Settlement ID:
-                        {{ $settlement['settlement_id'] ?? '-' }}
 
                     </div>
 
@@ -682,7 +981,8 @@
                             </div>
                         @endif
 
-                        @if ($refundedAmount > 0)
+                        {{-- Refunded amount use refunds  --}}
+                        @foreach ($refunds as $refund)
                             <div class="timeline-item">
 
                                 <div class="timeline-dot"></div>
@@ -692,40 +992,105 @@
                                 </div>
 
                                 <div class="timeline-time">
-
-                                    ₹{{ number_format($refundedAmount / 100, 2) }}
-                                    refunded
-
+                                    ₹{{ number_format(($refund['amount'] ?? 0) / 100, 2) }} refunded on
+                                    {{ isset($refund['created_at']) ? date('d M Y h:i:s A', $refund['created_at']) : 'N/A' }}
                                 </div>
 
                             </div>
-                        @endif
-
-                        @if ($settlement['status'] === 'processed')
-
-                            <div class="timeline-item">
-
-                                <div class="timeline-dot"></div>
-
-                                <div class="timeline-title">
-                                    Settlement Completed
-                                </div>
-
-                                <div class="timeline-time">
-
-                                    @if (!empty($settlement['settled_at']))
-                                        {{ date('d M Y h:i:s A', $settlement['settled_at']) }}
-                                    @else
-                                        Settled successfully
-                                    @endif
-
-                                </div>
-
-                            </div>
-
-                        @endif
+                        @endforeach
 
                     </div>
+
+                </div>
+
+            </div>
+
+            {{-- Refunds --}}
+
+            <div class="card full-width" style="margin-top: 24px;">
+
+                <div class="card-header">
+                    Refund History
+                </div>
+
+                <div class="card-body">
+
+                    @if (count($refunds))
+
+                        <div class="table-wrapper">
+
+                            <table>
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Refund ID
+                                        </th>
+
+                                        <th>
+                                            Created At
+                                        </th>
+
+                                        <th>
+                                            Amount
+                                        </th>
+
+                                        <th>
+                                            Status
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach ($refunds as $refund)
+                                        <tr>
+
+                                            <td>
+                                                {{ $refund['id'] ?? 'N/A' }}
+                                            </td>
+
+                                            <td>
+
+                                                {{ isset($refund['created_at']) ? date('d M Y  h:i:s A', $refund['created_at']) : 'N/A' }}
+                                            </td>
+
+                                            <td>
+
+                                                ₹
+
+                                                {{ number_format(
+                                                    ($refund['amount'] ?? 0) / 100,
+                                                
+                                                    2,
+                                                ) }}
+
+                                            </td>
+
+                                            <td>
+
+                                                {{ strtoupper($refund['status'] ?? 'N/A') }}
+
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    @else
+                        <div class="empty">
+                            No refunds found.
+                        </div>
+
+                    @endif
 
                 </div>
 

@@ -5,22 +5,15 @@
 
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="csrf-token"
-        content="{{ csrf_token() }}"
-    >
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>
         Create Payment
     </title>
 
     <style>
-
         * {
             box-sizing: border-box;
         }
@@ -30,12 +23,10 @@
             padding: 40px;
             min-height: 100vh;
             background:
-                linear-gradient(
-                    135deg,
+                linear-gradient(135deg,
                     #0f172a,
                     #111827,
-                    #1e293b
-                );
+                    #1e293b);
             font-family: Arial, sans-serif;
             color: white;
             display: flex;
@@ -75,20 +66,20 @@
         }
 
         .card {
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(10px);
             border:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             overflow: hidden;
             box-shadow:
-                0 10px 30px rgba(0,0,0,0.25);
+                0 10px 30px rgba(0, 0, 0, 0.25);
         }
 
         .card-header {
             padding: 28px 30px;
             border-bottom:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
         }
 
         .card-title {
@@ -123,9 +114,9 @@
             padding: 16px;
             border-radius: 14px;
             border:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
             background:
-                rgba(255,255,255,0.06);
+                rgba(255, 255, 255, 0.06);
             color: white;
             font-size: 16px;
             outline: none;
@@ -135,7 +126,7 @@
         .input:focus {
             border-color: #3b82f6;
             box-shadow:
-                0 0 0 4px rgba(59,130,246,0.15);
+                0 0 0 4px rgba(59, 130, 246, 0.15);
         }
 
         .input::placeholder {
@@ -164,9 +155,9 @@
             padding: 18px 20px;
             border-radius: 16px;
             border:
-                1px solid rgba(255,255,255,0.08);
+                1px solid rgba(255, 255, 255, 0.08);
             background:
-                rgba(255,255,255,0.04);
+                rgba(255, 255, 255, 0.04);
             cursor: pointer;
             transition: 0.2s;
         }
@@ -174,19 +165,18 @@
         .gateway-card:hover {
             transform: translateY(-2px);
             background:
-                rgba(255,255,255,0.06);
+                rgba(255, 255, 255, 0.06);
         }
 
-        .gateway-option input:checked
-        + .gateway-card {
+        .gateway-option input:checked+.gateway-card {
 
             border-color: #3b82f6;
 
             background:
-                rgba(59,130,246,0.12);
+                rgba(59, 130, 246, 0.12);
 
             box-shadow:
-                0 0 0 4px rgba(59,130,246,0.15);
+                0 0 0 4px rgba(59, 130, 246, 0.15);
         }
 
         .gateway-info {
@@ -200,11 +190,9 @@
             height: 48px;
             border-radius: 12px;
             background:
-                linear-gradient(
-                    135deg,
+                linear-gradient(135deg,
                     #2563eb,
-                    #3b82f6
-                );
+                    #3b82f6);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -225,7 +213,7 @@
 
         .selected-badge {
             background:
-                rgba(34,197,94,0.15);
+                rgba(34, 197, 94, 0.15);
             color: #4ade80;
             padding: 8px 12px;
             border-radius: 50px;
@@ -239,11 +227,9 @@
             padding: 18px;
             border-radius: 16px;
             background:
-                linear-gradient(
-                    135deg,
+                linear-gradient(135deg,
                     #2563eb,
-                    #3b82f6
-                );
+                    #3b82f6);
             color: white;
             font-size: 16px;
             font-weight: bold;
@@ -267,9 +253,9 @@
             padding: 18px;
             border-radius: 14px;
             background:
-                rgba(255,255,255,0.04);
+                rgba(255, 255, 255, 0.04);
             border:
-                1px solid rgba(255,255,255,0.06);
+                1px solid rgba(255, 255, 255, 0.06);
         }
 
         .secure-title {
@@ -303,296 +289,310 @@
                 padding: 22px;
             }
         }
-
     </style>
 
 </head>
 
 <body>
 
-<div class="wrapper">
+    <div class="wrapper">
 
-    <div class="top-bar">
+        <div class="top-bar">
 
-        <div class="page-title">
-            Create Payment
-        </div>
-
-        <a
-            href="{{ route('payments.index') }}"
-            class="back-btn"
-        >
-            ← Back
-        </a>
-
-    </div>
-
-    <div class="card">
-
-        <div class="card-header">
-
-            <div class="card-title">
-                Payment Checkout
+            <div class="page-title">
+                Create Payment
             </div>
 
-            <div class="card-subtitle">
-                Create and process a payment
-                securely using available gateways.
-            </div>
+            <a href="{{ route('payments.index') }}" class="back-btn">
+                ← Back
+            </a>
 
         </div>
 
-        <div class="card-body">
+        <div class="card">
 
-            <form id="payment-form">
+            <div class="card-header">
 
-                <div class="form-group">
-
-                    <label class="label">
-                        Amount
-                    </label>
-
-                    <input
-                        type="number"
-                        name="amount"
-                        class="input"
-                        step="0.01"
-                        min="1"
-                        placeholder="Enter amount"
-                        required
-                    >
-
+                <div class="card-title">
+                    Payment Checkout
                 </div>
 
-                <div class="form-group">
+                <div class="card-subtitle">
+                    Create and process a payment
+                    securely using available gateways.
+                </div>
 
-                    <label class="label">
-                        Payment Method
-                    </label>
+            </div>
 
-                    <div class="gateway-grid">
+            <div class="card-body">
 
-                        @foreach(
-                            $paymentMethods
-                            as $key => $value
-                        )
+                <form id="payment-form">
 
-                            <label
-                                class="gateway-option"
-                            >
+                    <div class="form-group">
 
-                                <input
-                                    type="radio"
-                                    name="gateway"
-                                    value="{{ $key }}"
-                                    {{
-                                        $loop->first
-                                        ? 'checked'
-                                        : ''
-                                    }}
-                                >
+                        <label class="label">
+                            Amount
+                        </label>
 
-                                <div
-                                    class="gateway-card"
-                                >
+                        <input type="number" name="amount" class="input" step="0.01" min="1"
+                            placeholder="Enter amount" required>
 
-                                    <div
-                                        class="gateway-info"
-                                    >
+                    </div>
 
-                                        <div
-                                            class="gateway-logo"
-                                        >
-                                            ₹
+                    <div class="form-group">
+
+                        <label class="label">
+                            Payment Method
+                        </label>
+
+                        <div class="gateway-grid">
+
+                            @foreach ($paymentMethods as $key => $value)
+                                <label class="gateway-option">
+
+                                    <input type="radio" name="gateway" value="{{ $key }}"
+                                        {{ $loop->first ? 'checked' : '' }}>
+
+                                    <div class="gateway-card">
+
+                                        <div class="gateway-info">
+
+                                            <div class="gateway-logo">
+                                                ₹
+                                            </div>
+
+                                            <div>
+
+                                                <div class="gateway-name">
+                                                    {{ $value }}
+                                                </div>
+
+                                                <div class="gateway-desc">
+                                                    UPI, Cards,
+                                                    Net Banking,
+                                                    Wallets
+                                                </div>
+
+                                            </div>
+
                                         </div>
 
-                                        <div>
-
-                                            <div
-                                                class="gateway-name"
-                                            >
-                                                {{ $value }}
-                                            </div>
-
-                                            <div
-                                                class="gateway-desc"
-                                            >
-                                                UPI, Cards,
-                                                Net Banking,
-                                                Wallets
-                                            </div>
-
+                                        <div class="selected-badge">
+                                            ACTIVE
                                         </div>
 
                                     </div>
 
-                                    <div
-                                        class="selected-badge"
-                                    >
-                                        ACTIVE
-                                    </div>
+                                </label>
+                            @endforeach
 
-                                </div>
+                        </div>
 
-                            </label>
+                    </div>
 
-                        @endforeach
+                    <button type="submit" class="submit-btn" id="submit-btn">
+                        Proceed To Checkout
+                    </button>
+
+                </form>
+
+                <div class="secure-box">
+
+                    <div class="secure-title">
+                        Secure Payment
+                    </div>
+
+                    <div class="secure-text">
+
+                        Payments are processed
+                        securely through Razorpay.
+                        Supports UPI, cards,
+                        net banking, wallets,
+                        and more.
 
                     </div>
 
                 </div>
 
-                <button
-                    type="submit"
-                    class="submit-btn"
-                    id="submit-btn"
-                >
-                    Proceed To Checkout
-                </button>
-
-            </form>
-
-            <div class="secure-box">
-
-                <div class="secure-title">
-                    Secure Payment
-                </div>
-
-                <div class="secure-text">
-
-                    Payments are processed
-                    securely through Razorpay.
-                    Supports UPI, cards,
-                    net banking, wallets,
-                    and more.
-
-                </div>
-
             </div>
 
         </div>
 
     </div>
 
-</div>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-const form =
-    document.getElementById(
-        'payment-form'
-    );
-
-const submitButton =
-    document.getElementById(
-        'submit-btn'
-    );
-
-form.addEventListener(
-    'submit',
-    async function (e) {
-
-        e.preventDefault();
-
-        submitButton.disabled = true;
-
-        submitButton.innerText =
-            'Creating Order...';
-
-        try {
-
-            const formData =
-                new FormData(form);
-
-            const response =
-                await fetch(
-                    "{{ route('payments.store') }}",
-                    {
-                        method: 'POST',
-
-                        headers: {
-                            'X-CSRF-TOKEN':
-                                document
-                                    .querySelector(
-                                        'meta[name="csrf-token"]'
-                                    )
-                                    .getAttribute(
-                                        'content'
-                                    )
-                        },
-
-                        body: formData
-                    }
-                );
-
-            const result =
-                await response.json();
-
-            submitButton.disabled = false;
-
-            submitButton.innerText =
-                'Proceed To Checkout';
-
-            const options = {
-
-                key: result.key,
-
-                amount:
-                    result.order.amount,
-
-                currency:
-                    result.order.currency,
-
-                order_id:
-                    result.order.id,
-
-                name:
-                    'Payment Integration',
-
-                description:
-                    'Laravel Payment Checkout',
-
-                handler: function (
-                    response
-                ) {
-
-                    alert(
-                        'Payment Successful'
-                    );
-
-                    console.log(
-                        response
-                    );
-
-                    window.location.href =
-                        "{{ route('payments.index') }}";
-                }
-            };
-
-            const razorpay =
-                new Razorpay(options);
-
-            razorpay.open();
-
-        } catch (error) {
-
-            submitButton.disabled = false;
-
-            submitButton.innerText =
-                'Proceed To Checkout';
-
-            alert(
-                'Something went wrong'
+    <script>
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            newestOnTop: true,
+            positionClass: "toast-top-right",
+            preventDuplicates: true,
+            timeOut: "3000"
+        };
+        const form =
+            document.getElementById(
+                'payment-form'
             );
 
-            console.error(error);
-        }
-    }
-);
+        const submitButton =
+            document.getElementById(
+                'submit-btn'
+            );
 
-</script>
+        form.addEventListener(
+            'submit',
+            async function(e) {
+
+                e.preventDefault();
+
+                submitButton.disabled = true;
+
+                submitButton.innerText =
+                    'Creating Order...';
+
+                try {
+
+                    const formData =
+                        new FormData(form);
+
+                    const response =
+                        await fetch(
+                            "{{ route('payments.store') }}", {
+                                method: 'POST',
+
+                                headers: {
+                                    'X-CSRF-TOKEN': document
+                                        .querySelector(
+                                            'meta[name="csrf-token"]'
+                                        )
+                                        .getAttribute(
+                                            'content'
+                                        )
+                                },
+
+                                body: formData
+                            }
+                        );
+
+                    const result =
+                        await response.json();
+
+                    submitButton.disabled = false;
+
+                    submitButton.innerText =
+                        'Proceed To Checkout';
+
+                    const options = {
+
+                        key: result.key,
+
+                        amount: result.order.amount,
+
+                        currency: result.order.currency,
+
+                        order_id: result.order.id,
+
+                        name: 'Payment Integration',
+
+                        description: 'Laravel Payment Checkout',
+
+                        handler: async function(
+                            response
+                        ) {
+
+
+                            try {
+
+                                const verifyResponse =
+                                    await fetch(
+                                        "{{ route('payments.verify') }}", {
+                                            method: 'POST',
+
+                                            headers: {
+
+                                                'Content-Type': 'application/json',
+
+                                                'X-CSRF-TOKEN': document
+                                                    .querySelector(
+                                                        'meta[name="csrf-token"]'
+                                                    )
+                                                    .getAttribute(
+                                                        'content'
+                                                    )
+                                            },
+
+                                            body: JSON.stringify({
+
+                                                razorpay_payment_id: response.razorpay_payment_id,
+
+                                                razorpay_order_id: response.razorpay_order_id,
+
+                                                razorpay_signature: response.razorpay_signature
+                                            })
+                                        }
+                                    );
+
+                                const result =
+                                    await verifyResponse.json();
+
+                                if (result.success) {
+
+                                    setTimeout(() => {
+
+                                        window.location.href =
+                                            "{{ route('payments.index') }}";
+
+                                    }, 1500);
+
+                                } else {
+
+                                    toastr.error(
+                                        result.message
+                                    );
+                                }
+
+                            } catch (error) {
+
+                                console.error(error);
+
+                                toastr.error(
+                                    'Payment verification failed'
+                                );
+                            }
+
+
+                        }
+
+                    };
+
+                    const razorpay =
+                        new Razorpay(options);
+
+                    razorpay.open();
+
+                } catch (error) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.innerText =
+                        'Proceed To Checkout';
+
+                    alert(
+                        'Something went wrong'
+                    );
+
+                    console.error(error);
+                }
+            }
+        );
+    </script>
 
 </body>
 
